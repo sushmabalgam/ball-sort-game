@@ -171,6 +171,16 @@ function onTouchMove(event) {
     event.preventDefault();
 }
 
+let droppletSound;
+function initDragAudio() {
+    droppletSound = new Audio('assets/dropplet.mp3');
+    droppletSound.load(); // Preload
+}
+
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initDragAudio, { once: true });
+document.addEventListener('click', initDragAudio, { once: true });
+
 // Handle touch end for mobile
 function onTouchEnd(event) {
     const targetCone = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)?.closest('.cone');
@@ -218,8 +228,12 @@ function onTouchEnd(event) {
                 draggedBall.style.transition = "transform 0.3s ease";
 
                 // Play drop sound
-                const dropSound = new Audio('assets/dropplet.mp3');
-                dropSound.play();
+                // const dropSound = new Audio('assets/dropplet.mp3');
+                // dropSound.play();
+                if (droppletSound) {
+                    droppletSound.currentTime = 0;
+                    droppletSound.play().catch(err => console.warn('Audio play failed:', err));
+                }
 
                 console.log(`Ball moved successfully to cone ${targetIndex}`);
                 draggedBall = null;
@@ -259,6 +273,16 @@ conesContainer.addEventListener('dragover', event => {
     event.preventDefault();
 });
 
+
+let wrongSound;
+function initWrongAudio() {
+    wrongSound = new Audio('assets/wrong.mp3');
+    wrongSound.load(); // Preload
+}
+
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initWrongAudio, { once: true });
+document.addEventListener('click', initWrongAudio, { once: true });
 conesContainer.addEventListener('drop', event => {
     const targetCone = event.target.closest('.cone');
     if (targetCone && draggedBall) {
@@ -289,8 +313,12 @@ conesContainer.addEventListener('drop', event => {
             const removedBallColor = sourceCone.pop();
             if (removedBallColor !== ballColor) {
                 console.error('Mismatch between dragged ball and source cone top ball');
-                const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
-                cheeringSound.play();
+                // const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
+                // cheeringSound.play();
+                if (wrongSound) {
+                    wrongSound.currentTime = 0;
+                    wrongSound.play().catch(err => console.warn('Audio play failed:', err));
+                }
                 draggedBall = null;
                 return;
             }
@@ -322,8 +350,12 @@ conesContainer.addEventListener('drop', event => {
         } else {
             console.log('Invalid move: Target cone does not match color or is full');
             // Play cheering sound
-            const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
-            cheeringSound.play();
+            // const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
+            // cheeringSound.play();
+            if (wrongSound) {
+                wrongSound.currentTime = 0;
+                wrongSound.play().catch(err => console.warn('Audio play failed:', err));
+            }
             draggedBall = null; // Reset draggedBall if the move is invalid
         }
     }
