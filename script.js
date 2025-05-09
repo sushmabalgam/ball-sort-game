@@ -344,7 +344,7 @@ function celebrateConeCompletion(coneIndex) {
 }
 
 // Function to trigger full-screen celebration on win
-function celebrateWin() {
+/*function celebrateWin() {
     console.log('Celebration: Full-screen win!');
 
     // Play cheering sound
@@ -361,6 +361,38 @@ function celebrateWin() {
     setTimeout(() => {
         celebrationOverlay.remove();
     }, 3000); // Remove overlay after 3 seconds
+}
+*/
+let cheeringSound;
+
+function initAudio() {
+    cheeringSound = new Audio('assets/wow.mp3');
+    cheeringSound.load(); // Preload
+}
+
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initAudio, { once: true });
+document.addEventListener('click', initAudio, { once: true });
+
+// Then you can safely play it in your drag-end logic:
+function celebrateWin() {
+    console.log('Celebration: Full-screen win!');
+    
+    if (cheeringSound) {
+        cheeringSound.currentTime = 0;
+        cheeringSound.play().catch(err => console.warn('Audio play failed:', err));
+    }
+
+    const celebrationOverlay = document.createElement('div');
+    celebrationOverlay.id = 'celebration-overlay';
+    celebrationOverlay.innerHTML = `
+        <div class="celebration-message">🎉Congratulations!! You Won! 🎉</div>
+    `;
+    document.body.appendChild(celebrationOverlay);
+
+    setTimeout(() => {
+        celebrationOverlay.remove();
+    }, 3000);
 }
 
 // Check if the player has won
