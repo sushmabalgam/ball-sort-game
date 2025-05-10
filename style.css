@@ -179,6 +179,7 @@ h1 {
 
 /* Reset button */
 #reset-button, #add-cone-button {
+/* #reset-button { */
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 1rem;
@@ -192,6 +193,7 @@ h1 {
 
 #reset-button:hover, #add-cone-button:hover {
     background: #1565c0;
+    color: #ffffff;
 }
 
 /* Confetti for cone completion */
@@ -297,17 +299,17 @@ h1 {
 /* User info section styles */
 #user-info {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 0px;
+    right: 5px;
     display: flex;
     align-items: center;
     gap: 10px;
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
     padding: 5px 10px;
-    border-radius: 5px;
     font-size: 0.9rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 10px 10px;
 }
 
 #user-name-display {
@@ -320,7 +322,7 @@ h1 {
     background: none;
     border: 1px solid #fff;
     color: #fff;
-    padding: 5px 10px;
+    padding: 2px;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
@@ -396,6 +398,8 @@ h1 {
 @media (max-width: 768px) {
     #game-container {
         padding: 15px;
+        background: url(./assets/bg.jpg) no-repeat center center;
+        background-size: cover;
     }
 
     #cones-container {
@@ -434,10 +438,14 @@ h1 {
         justify-content: normal;
         overflow: scroll;
         margin: auto;
+        background: url('./assets/bg3.jpg') no-repeat center center;
+        background-size: cover;
     }
+
     #cones-container {
         height: auto;
     }
+
     .cone {
         width: 25vw;
         max-width: 40px;
@@ -464,5 +472,12 @@ h1 {
     #user-info {
         top: 0;
         right: 0;
+        padding: 6px 10px;
+    }
+    #user-name-display {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #fff;
+        padding: 6px 0px;
     }
 }

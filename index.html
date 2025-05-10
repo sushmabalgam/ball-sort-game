@@ -7,12 +7,15 @@
     <title>Ball Sort Puzzle By Srihari Balgam</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="assets/gameOverview.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
     <div id="user-info">
         <span id="user-name-display">Player: Guest</span>
-        <button id="change-user-button">Change</button>
+        <button id="change-user-button" title="Change Player Name">
+            <i class="fa-regular fa-id-badge fa-flip fa-lg"></i>
+        </button>
     </div>
     <header class="game-header">
         <h1>Ball Sort Puzzle</h1>
@@ -24,15 +27,20 @@
         </div>
 
         <div id="controlls-container">
-            <button id="reset-button">Reset</button>
-            <button id="add-cone-button">+1</button>
+            <button id="reset-button" title="Reset Level"><i class="fa-solid fa-repeat"></i></button>
+            <button id="add-cone-button" title="Add Extra Tube">
+                +<i class="fa-duotone fa-solid fa-vial fa-rotate-by" style="color: #ffffff; --fa-rotate-angle: -45deg;"></i>
+            </button>
         </div>
     </div>
     <!-- <div id="cheat-sheet">
         <h2>Cheat Sheet</h2>
         <p>Click "Add Cone" if you need an extra cone to sort the balls.</p>
     </div> -->
-    <div id="developer-info">Game Developed by Srihari Balgam</div>
+    <div id="developer-info">
+        <i class="fa-duotone fa-solid fa-laptop-code fa-beat-fade"></i>
+        Developed by - Srihari Balgam
+    </div>
     <script src="script.js"></script>
 </body>
 
