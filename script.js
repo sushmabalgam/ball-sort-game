@@ -227,6 +227,25 @@ function onTouchMove(event) {
     event.preventDefault();
 }
 
+let droppletSound;
+function initDragAudio() {
+    droppletSound = new Audio('assets/dropplet.mp3');
+    droppletSound.load(); // Preload
+}
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initDragAudio, { once: true });
+document.addEventListener('click', initDragAudio, { once: true });
+
+
+let wrongSound;
+function initWrongAudio() {
+    wrongSound = new Audio('assets/wrong.mp3');
+    wrongSound.load(); // Preload
+}
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initWrongAudio, { once: true });
+document.addEventListener('click', initWrongAudio, { once: true });
+
 // Handle touch end for mobile
 function onTouchEnd(event) {
     const targetCone = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)?.closest('.cone');
@@ -272,14 +291,21 @@ function onTouchEnd(event) {
             draggedBall.style.transition = "transform 0.3s ease";
 
             // Play drop sound
-            const dropSound = new Audio('assets/dropplet.mp3');
-            dropSound.play();
+            // const dropSound = new Audio('assets/dropplet.mp3'); dropSound.play();
+            if (droppletSound) {
+                droppletSound.currentTime = 0;
+                droppletSound.play().catch(err => console.warn('Audio play failed:', err));
+            }
 
             console.log(`Ball moved successfully to cone ${targetIndex}`);
             draggedBall = null;
 
             checkWinCondition();
         } else {
+            if (wrongSound) {
+                wrongSound.currentTime = 0;
+                wrongSound.play().catch(err => console.warn('Audio play failed:', err));
+            }
             console.log('Invalid move: Target cone does not match color or is full');
             draggedBall = null; // Reset draggedBall if the move is invalid
         }
@@ -294,7 +320,6 @@ conesContainer.addEventListener('touchstart', event => {
 });
 
 conesContainer.addEventListener('touchmove', onTouchMove);
-
 conesContainer.addEventListener('touchend', onTouchEnd);
 
 conesContainer.addEventListener('dragend', () => {
@@ -331,6 +356,15 @@ conesContainer.addEventListener('dragover', event => {
     }
 });
 
+
+let wrongSoundC;
+function initWrongAudioC() {
+    wrongSoundC = new Audio('assets/wrong.mp3');
+    wrongSoundC.load(); // Preload
+}
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initWrongAudioC, { once: true });
+document.addEventListener('click', initWrongAudioC, { once: true });
 // Modify the drop logic to prevent cones from holding more than 4 balls
 conesContainer.addEventListener('drop', event => {
     const targetCone = event.target.closest('.cone');
@@ -362,8 +396,12 @@ conesContainer.addEventListener('drop', event => {
             const removedBallColor = sourceCone.pop();
             if (removedBallColor !== ballColor) {
                 console.error('Mismatch between dragged ball and source cone top ball');
-                const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
-                cheeringSound.play();
+                // const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
+                // cheeringSound.play();
+                if (wrongSound) {
+                    wrongSound.currentTime = 0;
+                    wrongSound.play().catch(err => console.warn('Audio play failed:', err));
+                }
                 draggedBall = null;
                 return;
             }
@@ -387,9 +425,12 @@ conesContainer.addEventListener('drop', event => {
             checkWinCondition();
         } else {
             console.log('Invalid move: Target cone does not match color or is full');
-            // Play cheering sound
-            const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
-            cheeringSound.play();
+            // const cheeringSound = new Audio('assets/wrong.mp3'); // Ensure the file exists in the specified path
+            // cheeringSound.play();
+            if (wrongSoundC) {
+                wrongSoundC.currentTime = 0;
+                wrongSoundC.play().catch(err => console.warn('Audio play failed:', err));
+            }
             draggedBall = null; // Reset draggedBall if the move is invalid
         }
     }
@@ -417,12 +458,24 @@ function celebrateConeCompletion(coneIndex) {
     });
 }
 
+let cheeringSound;
+function initAudio() {
+    cheeringSound = new Audio('assets/wow.mp3');
+    cheeringSound.load(); // Preload
+}
+// Call this once, in a user interaction (e.g., touchstart or click)
+document.addEventListener('touchstart', initAudio, { once: true });
+document.addEventListener('click', initAudio, { once: true });
+
 // Function to trigger full-screen celebration on win
 function celebrateWin() {
-    
+
     // Play cheering sound
-    const cheeringSound = new Audio('assets/wow.mp3'); // Ensure the file exists in the specified path
-    cheeringSound.play();
+    // const cheeringSound = new Audio('assets/wow.mp3'); cheeringSound.play();
+    if (cheeringSound) {
+        cheeringSound.currentTime = 0;
+        cheeringSound.play().catch(err => console.warn('Audio play failed:', err));
+    }
 
     const celebrationOverlay = document.createElement('div');
     celebrationOverlay.id = 'celebration-overlay';
@@ -451,16 +504,11 @@ function checkWinCondition() {
     });
 
     // Win condition: All filled cones have balls of the same color, 2 cones empty + additional cones
-    if ( (filledCones.length + emptyCones.length) === cones.length) {
+    if ((filledCones.length + emptyCones.length) === cones.length) {
         celebrateWin();
         level++; // Increase level
         setTimeout(initGame, 2000); // Start the next level after 2 seconds
     }
-    // if (filledCones.length === cones.length - (2 + additionalCones) && emptyCones.length === (2 + additionalCones)) {
-    //     celebrateWin();
-    //     level++; // Increase level
-    //     setTimeout(initGame, 2000); // Start the next level after 2 seconds
-    // }
 }
 
 // Check if all cones are full
