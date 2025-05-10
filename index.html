@@ -8,24 +8,32 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="assets/gameOverview.png" type="image/png">
 </head>
+
 <body>
     <div id="user-info">
         <span id="user-name-display">Player: Guest</span>
-        <button id="change-user-button">Change Player</button>
+        <button id="change-user-button">Change</button>
     </div>
+    <header class="game-header">
+        <h1>Ball Sort Puzzle</h1>
+        <div id="level-display">Level: 1</div>
+    </header>
     <div id="game-container">
-        <header class="game-header">
-            <h1>Ball Sort Puzzle</h1>
-            <div id="level-display">Level: 1</div>
-        </header>
         <div id="cones-container">
             <!-- Cones will be dynamically populated -->
         </div>
-        <button id="reset-button">
-            Reset
-        </button>
+
+        <div id="controlls-container">
+            <button id="reset-button">Reset</button>
+            <button id="add-cone-button">+1</button>
+        </div>
     </div>
+    <!-- <div id="cheat-sheet">
+        <h2>Cheat Sheet</h2>
+        <p>Click "Add Cone" if you need an extra cone to sort the balls.</p>
+    </div> -->
     <div id="developer-info">Game Developed by Srihari Balgam</div>
     <script src="script.js"></script>
 </body>
+
 </html>
